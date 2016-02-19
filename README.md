@@ -7,7 +7,7 @@ Preparing install in Ubuntu Server
 
     $ sudo apt-get install python-dev python-virtualenv nginx
 
-Run in your local
+Run in your local, make sure all file in temp-falcon has been copied to your project with directory name `deploy`
 
     $ git clone https://github.com/drayanaindra/auto-deploy.git
     $ cd auto-deploy/template/temp-falcon
