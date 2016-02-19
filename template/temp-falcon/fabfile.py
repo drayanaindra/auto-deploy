@@ -6,7 +6,7 @@ from fabric.api import *
 from fabric.colors import green
 from fabric.contrib.files import exists
 
-USER = ""
+USER = ""   # set username of server
 SITE_NAME = 'example-project'   # can configurable
 ENV_NAME = 'env-project'
 GIT_URL = 'https://github.com/drayanaindra/example-project.git' # change with your git repository
@@ -16,8 +16,8 @@ NGINX_NAME = 'nginx-{}.conf'.format(SITE_NAME)
 UPSTART_NAME = '{}.conf'.format(SITE_NAME)
 
 
-env.hosts = [""]  # host server (name or IP)
-env.user = USER  # name of user server
+env.hosts = [""]  # host server (domain or IP)
+env.user = USER  # name of username server
 env.password = ""  # password server
 
 
@@ -98,28 +98,60 @@ def symlink_upstart():
 
 
 def make_executable():
+    """
+    Make executable
+    """
     with cd(PATH_DIR_PROJECT):
         with cd('deploy'):
             run('chmod +x start.sh')
 
 
+def start_nginx():
+    """
+    Start nginx server
+    """
+    sudo('service nginx start')
+
+
 def restart_nginx():
+    """
+    Restart nginx server
+    """
     sudo('service nginx restart')
 
 
+def reload_nginx():
+    """
+    Reload nginx server
+    """
+    sudo('service nginx reload')
+
+
 def start_app():
+    """
+    Start the app
+    """
     sudo('start example-project')
 
 
 def restart_app():
+    """
+    Start the app
+    """
     sudo('restart example-project')
 
 
 def stop_app():
+    """
+    Start the app
+    """
     sudo('stop example-project')
 
 
 def pull_project():
+    """
+    Pull git repository
+    """
     with cd(PATH_DIR_PROJECT):
         run('git pull origin master')
 
@@ -136,7 +168,9 @@ def deploy_all():
     symlink_nginx()
     symlink_upstart()
     make_executable()
-    restart_nginx()
+
+    # you can change to the another function exp.
+    start_nginx()
     start_app()
 
 
